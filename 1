@@ -1,0 +1,44 @@
+from flask import Flask
+from flask import Flask,render_template
+from view.index import *
+from view.port_scanner import *
+from view.poc_scanner import *
+
+app = Flask(__name__)
+
+app.register_blueprint(index)
+app.register_blueprint(port_scanner)
+app.register_blueprint(poc_scanner)
+
+@app.errorhandler(404)
+def page_not_fount(e):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
+
+if __name__ == '__main__':
+   app.run()
+
+
+
+from flask import Blueprint, redirect, url_for ,render_template
+
+index = Blueprint('index', __name__)
+
+
+@index.route('/index')
+def view_index():
+    return render_template('base.html')
+
+
+@index.route('/')
+def view_base():
+    return render_template('base.html')
+
+
+
+    <link type="text/css" href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ url_for('static', filename='css/font-awesome-4.7.0/css/font-awesome.css') }}" rel="stylesheet">
